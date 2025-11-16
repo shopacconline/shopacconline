@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shopacconline.github.io/shopacconline/sitemap.xml

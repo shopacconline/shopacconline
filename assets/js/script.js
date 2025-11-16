@@ -976,6 +976,7 @@ const renderDetailPage = () => {
   const galleryImg = document.getElementById("product-image");
   const detailWrapper = document.getElementById("product-detail-wrapper");
   const backButton = document.getElementById("back-to-category");
+  const schemaEl = document.getElementById("product-schema");
 
   if (!product || !heroTitle || !infoList) {
     if (detailWrapper) {
@@ -1037,6 +1038,26 @@ const renderDetailPage = () => {
   galleryImg.alt = product.name;
 
   document.title = `${product.name} · Shop Acc Online`;
+
+  if (schemaEl) {
+    schemaEl.textContent = JSON.stringify(
+      {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        name: product.name,
+        image: [product.image],
+        description: product.description,
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "VND",
+          price: product.price,
+          availability: "https://schema.org/InStock"
+        }
+      },
+      null,
+      2
+    );
+  }
 
   const buyButton = document.querySelector("[data-action='buy-product']");
   if (buyButton) {
