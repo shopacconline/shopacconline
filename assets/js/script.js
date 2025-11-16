@@ -777,7 +777,11 @@ const getCategoryLink = (slug, page = 1) => `category.html?category=${slug}&page
 const buildProductCard = (product, categorySlug, options = {}) => {
     const card = document.createElement("div");
     card.className = "product-card";
+    card.tabIndex = 0;
+    card.setAttribute("role", "link");
+    card.setAttribute("aria-label", `Xem chi tiet ${product.name}`);
     const pageQuery = options.page ? `&page=${options.page}` : "";
+    const detailUrl = `product.html?category=${categorySlug}&product=${product.id}${pageQuery}`;
     const discountBadge =
       product.discountPercent > 0
         ? `<span class="badge bg-danger-subtle text-danger ms-2">-${product.discountPercent}%</span>`
@@ -791,8 +795,8 @@ const buildProductCard = (product, categorySlug, options = {}) => {
       <div class="product-body">
         <span class="badge-soft">${product.rank}</span>
         <h5 class="mb-1">${product.name}</h5>
-        <div class="product-meta">Tình trạng: ${product.delivery} · ${product.warranty}</div>
-        <div class="product-meta">Gói nổi bật: ${product.skins}</div>
+        <div class="product-meta">Tinh trang: ${product.delivery} - ${product.warranty}</div>
+        <div class="product-meta">Goi noi bat: ${product.skins}</div>
         <div class="product-price">
           ${formatCurrency(product.price)}
           ${discountBadge}
@@ -801,11 +805,18 @@ const buildProductCard = (product, categorySlug, options = {}) => {
       </div>
       <div class="product-footer">
         <small class="text-muted">${product.agents}</small>
-        <a class="btn btn-sm btn-primary" href="product.html?category=${categorySlug}&product=${product.id}${pageQuery}">
-          Xem chi tiết
-        </a>
       </div>
     `;
+    const navigateToDetail = () => {
+      window.location.href = detailUrl;
+    };
+    card.addEventListener("click", navigateToDetail);
+    card.addEventListener("keypress", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        navigateToDetail();
+      }
+    });
     return card;
   };
 
