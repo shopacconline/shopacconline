@@ -1032,7 +1032,7 @@ const renderDetailPage = () => {
   }
 
   const info = [
-    { label: "Hạng / Gói", value: product.rank },
+    { label: "Hạng", value: product.rank },
     { label: "Gói nổi bật", value: product.skins },
     { label: "Trạng thái", value: product.delivery },
     { label: "Bảo hành", value: product.warranty },
